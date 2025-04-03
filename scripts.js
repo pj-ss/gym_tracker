@@ -1,7 +1,20 @@
 let exerciseHistory = [];
 
+loadFromStorage();
+renderWorkoutLog();
+
+function loadFromStorage(){
+    exerciseHistory = JSON.parse(localStorage.getItem('history'));
+}
+
+function saveToStorage(){
+    localStorage.setItem('history', JSON.stringify(exerciseHistory));
+}
+
 function logExercise(event){
     event.preventDefault(); 
+
+    loadFromStorage();
     
     const form = event.target.form;
     const inputs = document.querySelectorAll('form input');
@@ -31,6 +44,7 @@ function logExercise(event){
     console.log(exerciseHistory);
     
     form.reset();
+    saveToStorage();
     renderWorkoutLog();
 }
 
@@ -38,7 +52,8 @@ function renderWorkoutLog() {
     let workoutLogHTML = '';
     
     exerciseHistory.forEach((exercise) => {
-        const newHTML = `
+        const newHTML = 
+        `
             <p><strong>${exercise.name}</strong>: ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight} lbs</p>
         `;
         workoutLogHTML += newHTML;       
