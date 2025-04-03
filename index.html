@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Tracker</title>
+</head>
+<body>
+    <div>
+        <div class="nav">
+            <a class="fa-solid fa-dumbbell"></a>
+        </div>
+        <div class="date">
+            <h2>{current date}</h2>
+        </div>
+        <div class="controls">
+            <form>
+                <input type="text" name="name" placeholder="Exercise Name"><br>
+                <input type="text" name="sets" placeholder="# of Sets"><br>
+                <input type="text" name="reps" placeholder="# of Reps"><br>
+                <input type="text" name="weight" placeholder="Weight (lbs)"><br>
+                <button onClick="logExercise(event);">Add Workout</button>
+            </form>
+        <div class="workout-log">
+        </div>
+        </div>
+    </div>
+</body>
+<script src="scripts.js"></script>
+</html>
