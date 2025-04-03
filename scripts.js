@@ -1,43 +1,48 @@
 let exerciseHistory = [];
 
-let exerciseData = {};
-
 function logExercise(event){
     event.preventDefault(); 
     
     const form = event.target.form;
     const inputs = document.querySelectorAll('form input');
-    
-    const newExercise = {};
-    
-    inputs.forEach(input => {
-        if (input.value.trim() !== '') {
-            if (input.name === 'sets' || input.name === 'reps' || input.name === 'weight') {
-                newExercise[input.name] = Number(input.value);
-            } else {
-                newExercise[input.name] = input.value;
-            }
-        } else {
-            newExercise[input.name] = exerciseData[input.name];
+
+    // Check if any field is empty
+    let hasEmptyFields = false;
+    inputs.forEach((input) => {
+        if (input.value.trim() === '') {
+            hasEmptyFields = true;
         }
     });
     
-    newExercise.timestamp = new Date();
+    // Don't proceed if any field is empty
+    if (hasEmptyFields) {
+        alert("Please fill in all fields");
+        return;
+    }
+    
+    const newExercise = {};
+    inputs.forEach((input) => {
+        newExercise[input.name] = input.value;
+    });
+    
+   // newExercise.timestamp = new Date();
     exerciseHistory.push(newExercise);
+    
+    console.log(exerciseHistory);
+    
     form.reset();
-    updateWorkoutLog();
+    renderWorkoutLog();
 }
 
-function updateWorkoutLog() {
-    const workoutLog = document.querySelector('.workout-log');
-    workoutLog.innerHTML = '';
+function renderWorkoutLog() {
+    let workoutLogHTML = '';
     
-    exerciseHistory.forEach((exercise, index) => {
-        const exerciseEntry = document.createElement('div');
-        exerciseEntry.className = 'exercise-entry';
-        exerciseEntry.innerHTML = `
+    exerciseHistory.forEach((exercise) => {
+        const newHTML = `
             <p><strong>${exercise.name}</strong>: ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight} lbs</p>
         `;
-        workoutLog.appendChild(exerciseEntry);
+        workoutLogHTML += newHTML;       
     });
+
+    document.querySelector('.js-workout-log').innerHTML = workoutLogHTML;
 }

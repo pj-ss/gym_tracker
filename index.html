@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type='text/css' href="styles.css">
     <title>Gym Tracker</title>
 </head>
 <body>
-    <div>
-        <div class="nav">
-            <a class="fa-solid fa-dumbbell"></a>
+    <header>
+        <div>
+            <a class="fa-solid fa-dumbbell"> Gym Tracker</a>
         </div>
+        <div>
+            <i class="fa-solid fa-calendar-days"></i>
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </header>
+    <main>
         <div class="date">
             <h2>{current date}</h2>
         </div>
@@ -19,12 +27,16 @@
                 <input type="text" name="sets" placeholder="# of Sets"><br>
                 <input type="text" name="reps" placeholder="# of Reps"><br>
                 <input type="text" name="weight" placeholder="Weight (lbs)"><br>
-                <button onClick="logExercise(event);">Add Workout</button>
+                <button onClick="logExercise(event);">Add Exercise</button>
             </form>
-        <div class="workout-log">
+        <div class="workout-log js-workout-log">
+            <p>Workout Log Empty</p>
         </div>
         </div>
-    </div>
+    </main>
+    <footer>
+        <a href="https://github.com/pj-ss" target="_blank" class="fa-brands fa-github"></a>
+    </footer>
 </body>
 <script src="scripts.js"></script>
 </html>

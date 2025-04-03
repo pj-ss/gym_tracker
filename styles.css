@@ -1,0 +1,31 @@
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header div:last-child {
+    display: flex;
+    gap: 15px;
+}
+
+header div:first-child a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body {
+    min-height: 100vh;
+    background: #2a2438;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+}
+
+header, main, footer {
+    width: 800px;
+    max-width: 100%;
+    margin: 0 auto;
+}
