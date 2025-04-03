@@ -2,6 +2,7 @@ let exerciseHistory = [];
 
 loadFromStorage();
 renderWorkoutLog();
+currentDate();
 
 function loadFromStorage(){
     exerciseHistory = JSON.parse(localStorage.getItem('history'));
@@ -60,4 +61,16 @@ function renderWorkoutLog() {
     });
 
     document.querySelector('.js-workout-log').innerHTML = workoutLogHTML;
+}
+
+function currentDate() {
+    const dateToday = new Date();
+    const dateString = dateToday.toDateString();
+
+    const dateHTML = 
+    `
+    <h2>${dateString}</h2>
+    `;
+
+    document.querySelector('.date').innerHTML = dateHTML;
 }
