@@ -14,24 +14,24 @@
         </div>
         <div>
             <i class="fa-solid fa-calendar-days"></i>
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus" onClick="showInputsFields()"></i>
         </div>
     </header>
     <main>
-        <div class="date">
-            
-        </div>
-        <div class="controls">
-            <form>
-                <input type="text" name="name" placeholder="Exercise Name"><br>
-                <input type="text" name="sets" placeholder="# of Sets"><br>
-                <input type="text" name="reps" placeholder="# of Reps"><br>
-                <input type="text" name="weight" placeholder="Weight (lbs)"><br>
-                <button onClick="logExercise(event);">Add Exercise</button>
-            </form>
-        <div class="workout-log js-workout-log">
-            <p>Workout Log Empty</p>
-        </div>
+        <div class="date"></div>
+        <div>
+            <div>
+                <form class="userInputs" style="display:none">
+                    <input type="text" name="name" placeholder="Exercise Name"><br>
+                    <input type="text" name="sets" placeholder="# of Sets"><br>
+                    <input type="text" name="reps" placeholder="# of Reps"><br>
+                    <input type="text" name="weight" placeholder="Weight (lbs)"><br>
+                    <button onClick="logExercise(event)">Add Exercise</button>
+                </form>
+            </div>
+            <div class="workout-log js-workout-log">
+                <p>Workout Log Empty</p>
+            </div>
         </div>
     </main>
     <footer>
