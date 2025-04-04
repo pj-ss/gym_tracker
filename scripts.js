@@ -48,7 +48,14 @@ function logExercise(event){
     
     console.log(exerciseHistory);
     
-    form.reset();
+    const formButton = document.querySelector('form button');
+    formButton.textContent = "Add Exercise";
+
+    // Optionally, hide the form after submission
+    // document.querySelector('form').style.display = 'none';
+
+    document.querySelector('form').reset();
+
     saveToStorage();
     renderWorkoutLog();
 }
@@ -80,7 +87,7 @@ function deleteExercise(exerciseId) {
     const newExerciseHistory = [];
 
     exerciseHistory.forEach((exercise) => {
-        if(exercise.id !== exerciseId){
+        if(String(exercise.id) !== String(exerciseId)){ //was previously trying to compare an object to a string
             newExerciseHistory.push(exercise);
         }
     });
@@ -101,6 +108,7 @@ function editExercise(exerciseId) {
             form.querySelector('input[name="sets"]').value = exercise.sets;
             form.querySelector('input[name="reps"]').value = exercise.reps;
             form.querySelector('input[name="weight"]').value = exercise.weight;
+            form.querySelector('button').textContent = "Update Exercise";
             deleteExercise(exercise.id);
         }
     });
@@ -122,5 +130,5 @@ function currentDate() {
 //Toggle the input fields from hidden to block
 function showInputsFields() {
     const userInputs = document.querySelector('.userInputs');
-    userInputs.style.display = "block";
+    userInputs.style.display = userInputs.style.display === 'none' ? 'block' : 'none';
 }

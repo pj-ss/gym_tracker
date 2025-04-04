@@ -29,3 +29,13 @@ header, main, footer {
     max-width: 100%;
     margin: 0 auto;
 }
+
+.date-selector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-selector .fa-solid {
+    font-size: 25px;
+}
