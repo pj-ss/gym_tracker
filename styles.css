@@ -59,6 +59,11 @@ select {
     margin-right: 5px;
 }
 
+input[name="name"] {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 .set input[type="text"] {
     padding: 5px;
     border: 1px solid #ccc;
@@ -69,8 +74,8 @@ select {
 
 .set input, .set select {
     margin-right: 5px; 
-  }
+}
 
 .set label {
     margin-right: 5px;
-  }
+}

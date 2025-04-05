@@ -29,18 +29,20 @@
                     <div>
                         <fieldset>
                         <input type="text" name="name" placeholder="Exercise Name"><br>
-                            <div class="set">
-                                <label for="setNumber">Set 1:</label>
-                                <input type="text" name="weight" placeholder="Weight">
-                                <select id="unit" name="unit">
-                                    <option value="lbs">lbs</option>
-                                    <option value="kg">kg</option>
-                                </select>
-                                <label>x</label>
-                                <input type="text" name="reps" placeholder="# of Reps">
-                                <label>Reps</label>
+                            <div class="set-list">
+                                <div class="set">
+                                    <label for="setNumber">Set 1:</label>
+                                    <input type="text" name="weight" placeholder="Weight">
+                                    <select id="unit" name="unit">
+                                        <option value="lbs">lbs</option>
+                                        <option value="kg">kg</option>
+                                    </select>
+                                    <label>x</label>
+                                    <input type="text" name="reps" placeholder="# of Reps">
+                                    <label>Reps</label>
+                                </div>
                             </div>
-                        <button onClick="">Add Set</button>
+                        <button onClick="addSet(event)">Add Set</button>
                         <button onClick="logExercise(event)">Save Exercise</button>
                         </fieldset>
                     </div>

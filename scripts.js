@@ -16,6 +16,45 @@ function saveToStorage(){
     localStorage.setItem('history', JSON.stringify(exerciseHistory));
 }
 
+function addSet(event){
+    event.preventDefault(); 
+    const setCount = document.querySelectorAll('.set').length;
+
+    const newsetHTML =
+    `
+    <div class="set set-${setCount+1}">
+        <label for="setNumber">Set ${setCount+1}:</label>
+        <input type="text" name="weight" placeholder="Weight">
+        <select id="unit" name="unit">
+            <option value="lbs">lbs</option>
+            <option value="kg">kg</option>
+        </select>
+        <label>x</label>
+        <input type="text" name="reps" placeholder="# of Reps">
+        <label>Reps</label>
+        <i onClick="removeSet(${setCount+1})" class="fa-solid fa-minus"></i>
+    </div>
+    `;
+    document.querySelector('.set-list').innerHTML += newsetHTML;
+}
+
+function removeSet(setNumber){
+    const targetSet = document.querySelector(`.set-${setNumber}`);
+    targetSet.remove();
+
+    updateSetLabels();
+}
+
+function updateSetLabels() {
+    const sets = document.querySelectorAll('.set-list .set');
+    sets.forEach((set, index) => {
+        const label = set.querySelector('label');
+        if (label) {
+            label.textContent = `Set ${index + 1}:`;
+        }
+    });
+}
+
 function logExercise(event){
     event.preventDefault(); 
 
