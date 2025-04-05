@@ -39,3 +39,38 @@ header, main, footer {
 .date-selector .fa-solid {
     font-size: 25px;
 }
+
+.set {
+    display: flex; /* Use flexbox for inline arrangement */
+    align-items: center; /* Vertically center items */
+    margin: 10px 0; /* Space between sets */
+}
+
+label {
+    margin-right: 10px; 
+    font-weight: normal;
+}
+
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 50px;
+    margin-right: 5px;
+}
+
+.set input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100px;
+    margin-right: 5px;
+}
+
+.set input, .set select {
+    margin-right: 5px; 
+  }
+
+.set label {
+    margin-right: 5px;
+  }

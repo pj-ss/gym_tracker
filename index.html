@@ -26,11 +26,24 @@
         <div>
             <div>
                 <form class="userInputs" style="display:none">
-                    <input type="text" name="name" placeholder="Exercise Name"><br>
-                    <input type="text" name="sets" placeholder="# of Sets"><br>
-                    <input type="text" name="reps" placeholder="# of Reps"><br>
-                    <input type="text" name="weight" placeholder="Weight (lbs)"><br>
-                    <button onClick="logExercise(event)">Add Exercise</button>
+                    <div>
+                        <fieldset>
+                        <input type="text" name="name" placeholder="Exercise Name"><br>
+                            <div class="set">
+                                <label for="setNumber">Set 1:</label>
+                                <input type="text" name="weight" placeholder="Weight">
+                                <select id="unit" name="unit">
+                                    <option value="lbs">lbs</option>
+                                    <option value="kg">kg</option>
+                                </select>
+                                <label>x</label>
+                                <input type="text" name="reps" placeholder="# of Reps">
+                                <label>Reps</label>
+                            </div>
+                        <button onClick="">Add Set</button>
+                        <button onClick="logExercise(event)">Save Exercise</button>
+                        </fieldset>
+                    </div>
                 </form>
             </div>
             <div class="workout-log js-workout-log">
