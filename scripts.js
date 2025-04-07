@@ -18,9 +18,12 @@ function saveToStorage(){
 
 function addSet(event){
     event.preventDefault(); 
+    const setList = document.querySelector('.set-list');
     const setCount = document.querySelectorAll('.set').length;
 
-    const newsetHTML =
+    const tempDiv = document.createElement('div');
+
+    tempDiv.innerHTML = 
     `
     <div class="set set-${setCount+1}">
         <label for="setNumber">Set ${setCount+1}:</label>
@@ -35,7 +38,9 @@ function addSet(event){
         <i onClick="removeSet(${setCount+1})" class="fa-solid fa-minus"></i>
     </div>
     `;
-    document.querySelector('.set-list').innerHTML += newsetHTML;
+
+    const newSet = tempDiv.firstElementChild;
+    setList.appendChild(newSet);
 }
 
 function removeSet(setNumber){
@@ -55,6 +60,71 @@ function updateSetLabels() {
     });
 }
 
+function logExercise(event) {
+    event.preventDefault();
+    
+    loadFromStorage();
+    
+    const form = document.querySelector('.userInputs');
+    const exerciseName = form.querySelector('input[name="name"]').value.trim();
+    
+    // Check if exercise name is empty
+    if (exerciseName === '') {
+        alert("Please provide an exercise name");
+        return;
+    }
+    
+    // Get all set divs
+    const setDivs = document.querySelectorAll('.set-list .set');
+    
+    // Get data for each set
+    const sets = [];
+    
+    setDivs.forEach((setDiv, index) => {
+        const weightInput = setDiv.querySelector('input[name="weight"]');
+        const unitSelect = setDiv.querySelector('select[name="unit"]');
+        const repsInput = setDiv.querySelector('input[name="reps"]');
+        
+        // Only add sets that have data
+        if (weightInput && weightInput.value.trim() !== '' && 
+            repsInput && repsInput.value.trim() !== '') {
+            
+            sets.push({
+                setNumber: index + 1,
+                weight: weightInput.value.trim(),
+                unit: unitSelect ? unitSelect.value : 'lbs',
+                reps: repsInput.value.trim()
+            });
+        }
+    });
+    
+    // Check if at least one set has data
+    if (sets.length === 0) {
+        alert("Please fill in data for at least one set");
+        return;
+    }
+    
+    // Create the exercise object
+    const newExercise = {
+        id: new Date().getTime(),
+        name: exerciseName,
+        sets: sets,
+        date: new Date().toISOString().split('T')[0] // Add current date in YYYY-MM-DD format
+    };
+    
+    exerciseHistory.push(newExercise);
+    console.log(exerciseHistory);
+    
+    // Reset form
+    form.reset();
+    
+    // Save to storage and update UI
+    saveToStorage();
+    renderWorkoutLog();
+}
+
+
+/* Older function before user was able to add different number of sets and select weight units
 function logExercise(event){
     event.preventDefault(); 
 
@@ -98,6 +168,7 @@ function logExercise(event){
     saveToStorage();
     renderWorkoutLog();
 }
+*/
 
 function renderWorkoutLog() {
     let workoutLogHTML = '';
@@ -107,9 +178,20 @@ function renderWorkoutLog() {
         workoutLogHTML += defaultHTML;   
     } else {
         exerciseHistory.forEach((exercise) => {
+            setsHTML = '';
+            
+            exercise.sets.forEach((set) => {
+                setsHTML += `Set ${set.setNumber}: ${set.weight} ${set.unit} for ${set.reps} reps<br>`;
+            });
+            
+            
             const newHTML = 
             `
-                <p><strong>${exercise.name}</strong>: ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight} lbs</p>
+                <p>
+                <strong>${exercise.name}</strong>:<br>
+                ${setsHTML}
+                </p>
+
                 <div id="itemActions">
                     <i onclick="editExercise('${exercise.id}')" class="fa-solid fa-pen-to-square"></i>
                     <i onclick="deleteExercise('${exercise.id}')" class="fa-solid fa-trash"></i>
