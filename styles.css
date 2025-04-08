@@ -2,6 +2,13 @@ html {
     font-family: 'Manrope', sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+    transition-duration: 300ms;
+    margin: 0;
+    padding: 0;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -66,6 +73,7 @@ select {
 input[name="name"] {
     width: 100%;
     margin-bottom: 10px;
+    padding: 7px;
 }
 
 .set input[type="text"] {
@@ -82,4 +90,128 @@ input[name="name"] {
 
 .set label {
     margin-right: 5px;
+}
+
+
+
+
+/* Add spacing between form elements */
+.userInputs fieldset > * {
+    margin-bottom: 10px;
+}
+
+/* Space between buttons */
+.userInputs button {
+    margin-right: 5px;
+    font-size: 12px;
+    padding: 5px;
+}
+
+/* Space between each logged exercise */
+.workout-log > p {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+/* Add space under exercise actions (edit/delete icons) */
+#itemActions {
+    margin-bottom: 20px;
+}
+
+/* Space between input fields in each set */
+.set input,
+.set select,
+.set label,
+.set i {
+    margin-right: 5px;
+}
+
+/* Add some padding around the form */
+.userInputs {
+    background-color: #3d2d57;
+    padding: 1rem;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/*
+fieldset input{
+    border: none;
+    color: white;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+*/
+
+/* Space below date header */
+.date-selector {
+    margin-bottom: 15px;
+}
+
+/* 
+Exercise card elements
+*/
+.exercise-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+  
+.exercise-card {
+    background-color: #3d2d57;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.exercise-header {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.set-line {
+    margin: 0.25rem 0;
+}
+
+#itemActions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+#itemActions i {
+    cursor: pointer;
+    color: #ccc;
+}
+
+#itemActions i:hover {
+    color: #fff;
+}
+  
+/* 
+Icons
+*/
+
+.header-icons{
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.fa-github {
+    color: #dbd8e3;
 }

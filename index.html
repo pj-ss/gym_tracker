@@ -13,11 +13,11 @@
 <body>
     <header>
         <div>
-            <a class="fa-solid fa-dumbbell"> Gym Tracker</a>
+            <a class="fa-solid fa-dumbbell header-icons"> Gym Tracker</a>
         </div>
         <div>
-            <i class="fa-solid fa-calendar-days"></i>
-            <i class="fa-solid fa-plus" onClick="showInputsFields()"></i>
+            <i class="fa-solid fa-calendar-days header-icons"></i>
+            <i class="fa-solid fa-plus header-icons" onClick="showInputsFields()"></i>
         </div>
     </header>
     <main>
@@ -45,8 +45,8 @@
                                     <label>Reps</label>
                                 </div>
                             </div>
-                        <button onClick="addSet(event)">Add Set</button>
-                        <button onClick="logExercise(event)">Save Exercise</button>
+                        <button onClick="addSet(event)"><i class="fa-solid fa-plus"></i> Add Set</button>
+                        <button id="saveBtn" onClick="logExercise(event)"><i class="fa-solid fa-floppy-disk"></i> Save Exercise</button>
                         </fieldset>
                     </div>
                 </form>

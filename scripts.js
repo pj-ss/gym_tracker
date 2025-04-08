@@ -119,90 +119,56 @@ function logExercise(event){
     // Reset form
     form.reset();
     editingExerciseId = null;
+    document.getElementById('saveBtn').textContent = "Save Exercise";
     
-    // Save to storage and update UI
+    // Save to storage and render workoutlog again
     saveToStorage();
     renderWorkoutLog();
 }
 
-/* Older function before user was able to add different number of sets and select weight units
-function logExercise(event){
-    event.preventDefault(); 
-
-    loadFromStorage();
-    
-    const form = event.target.form;
-    const inputs = document.querySelectorAll('form input');
-
-    // Check if any field is empty
-    let hasEmptyFields = false;
-    inputs.forEach((input) => {
-        if (input.value.trim() === '') {
-            hasEmptyFields = true;
-        }
-    });
-    
-    // Don't proceed if any field is empty
-    if (hasEmptyFields) {
-        alert("Please fill in all fields");
-        return;
-    }
-    
-    const newExercise = {};
-    inputs.forEach((input) => {
-        newExercise[input.name] = input.value;
-    });
-    
-    newExercise.id = new Date();
-    exerciseHistory.push(newExercise);
-    
-    console.log(exerciseHistory);
-    
-    const formButton = document.querySelector('form button');
-    formButton.textContent = "Add Exercise";
-
-    // Optionally, hide the form after submission
-    // document.querySelector('form').style.display = 'none';
-
-    document.querySelector('form').reset();
-
-    saveToStorage();
-    renderWorkoutLog();
-}
-*/
-
-function renderWorkoutLog(){
+function renderWorkoutLog() {
     let workoutLogHTML = '';
 
-    if (exerciseHistory === undefined || exerciseHistory.length == 0) {
-        const defaultHTML = '<p>Workout Log Empty</p>';
-        workoutLogHTML += defaultHTML;   
+    if (!exerciseHistory || exerciseHistory.length === 0) {
+        workoutLogHTML = '<p>Workout Log Empty</p>';
     } else {
-        exerciseHistory.forEach((exercise) => {
-            setsHTML = '';
-            
-            exercise.sets.forEach((set) => {
-                setsHTML += `Set ${set.setNumber}: ${set.weight} ${set.unit} for ${set.reps} reps<br>`;
-            });
-            
-            
-            const newHTML = 
-            `
-                <p>
-                <strong>${exercise.name}</strong>:<br>
-                ${setsHTML}
-                </p>
+        workoutLogHTML += '<div class="exercise-list">'; // Container for all cards
 
-                <div id="itemActions">
-                    <i onclick="editExercise('${exercise.id}')" class="fa-solid fa-pen-to-square"></i>
-                    <i onclick="deleteExercise('${exercise.id}')" class="fa-solid fa-trash"></i>
+        exerciseHistory.forEach((exercise) => {
+            let setsHTML = '';
+
+            exercise.sets.forEach((set) => {
+                setsHTML += `
+                    <div class="set-line">
+                        Set ${set.setNumber}: ${set.weight} ${set.unit} for ${set.reps} reps
+                    </div>
+                `;
+            });
+
+            const newHTML = `
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <strong>${exercise.name}</strong>
+                    </div>
+                    <div class="exercise-sets">
+                        ${setsHTML}
+                    </div>
+                    <div id="itemActions">
+                        <i onclick="editExercise('${exercise.id}')" class="fa-solid fa-pen-to-square"></i>
+                        <i onclick="deleteExercise('${exercise.id}')" class="fa-solid fa-trash"></i>
+                    </div>
                 </div>
             `;
-            workoutLogHTML += newHTML;       
+
+            workoutLogHTML += newHTML;
         });
+
+        workoutLogHTML += '</div>'; // End .exercise-list
     }
+
     document.querySelector('.js-workout-log').innerHTML = workoutLogHTML;
 }
+
 
 // Delete exercise based on its ID
 function deleteExercise(exerciseId){
@@ -226,6 +192,9 @@ function editExercise(exerciseId){
 
     const form = document.querySelector('form.userInputs');
     const setList = form.querySelector('.set-list');
+
+    // Update button text
+    document.getElementById('saveBtn').textContent = "Update Exercise";
 
     // Clear existing sets
     setList.innerHTML = '';
