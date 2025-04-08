@@ -1,3 +1,7 @@
+html {
+    font-family: 'Manrope', sans-serif;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -41,9 +45,9 @@ header, main, footer {
 }
 
 .set {
-    display: flex; /* Use flexbox for inline arrangement */
-    align-items: center; /* Vertically center items */
-    margin: 10px 0; /* Space between sets */
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
 }
 
 label {

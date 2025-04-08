@@ -1,4 +1,5 @@
 let exerciseHistory = [];
+let editingExerciseId = null;
 
 //On page load
 loadFromStorage();
@@ -50,7 +51,7 @@ function removeSet(setNumber){
     updateSetLabels();
 }
 
-function updateSetLabels() {
+function updateSetLabels(){
     const sets = document.querySelectorAll('.set-list .set');
     sets.forEach((set, index) => {
         const label = set.querySelector('label');
@@ -60,7 +61,7 @@ function updateSetLabels() {
     });
 }
 
-function logExercise(event) {
+function logExercise(event){
     event.preventDefault();
     
     loadFromStorage();
@@ -106,7 +107,7 @@ function logExercise(event) {
     
     // Create the exercise object
     const newExercise = {
-        id: new Date().getTime(),
+        id: editingExerciseId || new Date().getTime(),
         name: exerciseName,
         sets: sets,
         date: new Date().toISOString().split('T')[0] // Add current date in YYYY-MM-DD format
@@ -117,12 +118,12 @@ function logExercise(event) {
     
     // Reset form
     form.reset();
+    editingExerciseId = null;
     
     // Save to storage and update UI
     saveToStorage();
     renderWorkoutLog();
 }
-
 
 /* Older function before user was able to add different number of sets and select weight units
 function logExercise(event){
@@ -170,7 +171,7 @@ function logExercise(event){
 }
 */
 
-function renderWorkoutLog() {
+function renderWorkoutLog(){
     let workoutLogHTML = '';
 
     if (exerciseHistory === undefined || exerciseHistory.length == 0) {
@@ -203,8 +204,8 @@ function renderWorkoutLog() {
     document.querySelector('.js-workout-log').innerHTML = workoutLogHTML;
 }
 
-//Delete exercise based on its ID
-function deleteExercise(exerciseId) {
+// Delete exercise based on its ID
+function deleteExercise(exerciseId){
     const newExerciseHistory = [];
 
     exerciseHistory.forEach((exercise) => {
@@ -218,25 +219,52 @@ function deleteExercise(exerciseId) {
     renderWorkoutLog();
 }
 
-//Edit exercise based on its ID
-function editExercise(exerciseId) {
+// Edit exercise based on its ID
+function editExercise(exerciseId){
+    const exercise = exerciseHistory.find(e => String(e.id) === String(exerciseId));
+    if (!exercise) return;
 
-    exerciseHistory.forEach((exercise) => {
-        if(exercise.id == exerciseId){
-            const form = document.querySelector('form');
-            form.style.display = 'block';
-            form.querySelector('input[name="name"]').value = exercise.name;
-            form.querySelector('input[name="sets"]').value = exercise.sets;
-            form.querySelector('input[name="reps"]').value = exercise.reps;
-            form.querySelector('input[name="weight"]').value = exercise.weight;
-            form.querySelector('button').textContent = "Update Exercise";
-            deleteExercise(exercise.id);
-        }
+    const form = document.querySelector('form.userInputs');
+    const setList = form.querySelector('.set-list');
+
+    // Clear existing sets
+    setList.innerHTML = '';
+
+    // Show form
+    form.style.display = 'block';
+
+    // Set the name
+    form.querySelector('input[name="name"]').value = exercise.name;
+
+    // Add and populate sets
+    exercise.sets.forEach((set, index) => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = `
+        <div class="set set-${index+1}">
+            <label for="setNumber">Set ${index+1}:</label>
+            <input type="text" name="weight" value="${set.weight}" placeholder="Weight">
+            <select name="unit">
+                <option value="lbs" ${set.unit === 'lbs' ? 'selected' : ''}>lbs</option>
+                <option value="kg" ${set.unit === 'kg' ? 'selected' : ''}>kg</option>
+            </select>
+            <label>x</label>
+            <input type="text" name="reps" value="${set.reps}" placeholder="# of Reps">
+            <label>Reps</label>
+            <i onClick="removeSet(${index+1})" class="fa-solid fa-minus"></i>
+        </div>
+        `;
+        setList.appendChild(tempDiv.firstElementChild);
     });
+
+    // Set current editing ID
+    editingExerciseId = exercise.id;
+
+    // Remove the old entry (we'll save updated version when user clicks save)
+    deleteExercise(exercise.id);
 }
 
-//Display current date on landing page and later use it to load relevant exercise history
-function currentDate() {
+// Display current date on landing page and later use it to load relevant exercise history
+function currentDate(){
     const dateToday = new Date();
     const dateString = dateToday.toDateString();
 
@@ -248,8 +276,8 @@ function currentDate() {
     document.querySelector('.date').innerHTML = dateHTML;
 }
 
-//Toggle the input fields from hidden to block
-function showInputsFields() {
+// Toggle the input fields from hidden to block
+function showInputsFields(){
     const userInputs = document.querySelector('.userInputs');
     userInputs.style.display = userInputs.style.display === 'none' ? 'block' : 'none';
 }
