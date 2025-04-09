@@ -1,7 +1,7 @@
-let exerciseHistory = [];
-let editingExerciseId = null;
+let exerciseHistory = []; // Later on might have to store each workout by date instead
+let editingExerciseId = null; // Check if we're in an editing exercise state
 
-//On page load
+// Shit to run on page load
 loadFromStorage();
 renderWorkoutLog();
 currentDate();
@@ -67,6 +67,7 @@ function logExercise(event){
     loadFromStorage();
     
     const form = document.querySelector('.userInputs');
+    const setList = document.querySelector('.set-list');
     const exerciseName = form.querySelector('input[name="name"]').value.trim();
     
     // Check if exercise name is empty
@@ -116,11 +117,28 @@ function logExercise(event){
     exerciseHistory.push(newExercise);
     console.log(exerciseHistory);
     
-    // Reset form
+    // Reset form to default with single set
     form.reset();
+    //form.style.display = 'none'
     editingExerciseId = null;
-    document.getElementById('saveBtn').textContent = "Save Exercise";
+    document.getElementById('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Exercise';
+    setList.innerHTML = ''; // Clear all dynamic sets
     
+    // Add back the initial single set
+    setList.innerHTML = `
+        <div class="set">
+            <label for="setNumber">Set 1:</label>
+            <input type="text" name="weight" placeholder="Weight">
+            <select id="unit" name="unit">
+                <option value="lbs">lbs</option>
+                <option value="kg">kg</option>
+            </select>
+            <label>x</label>
+            <input type="text" name="reps" placeholder="# of Reps">
+            <label>Reps</label>
+        </div>
+    `;
+ 
     // Save to storage and render workoutlog again
     saveToStorage();
     renderWorkoutLog();
@@ -169,7 +187,6 @@ function renderWorkoutLog() {
     document.querySelector('.js-workout-log').innerHTML = workoutLogHTML;
 }
 
-
 // Delete exercise based on its ID
 function deleteExercise(exerciseId){
     const newExerciseHistory = [];
@@ -194,7 +211,7 @@ function editExercise(exerciseId){
     const setList = form.querySelector('.set-list');
 
     // Update button text
-    document.getElementById('saveBtn').textContent = "Update Exercise";
+    document.getElementById('saveBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update Exercise';
 
     // Clear existing sets
     setList.innerHTML = '';
@@ -228,7 +245,7 @@ function editExercise(exerciseId){
     // Set current editing ID
     editingExerciseId = exercise.id;
 
-    // Remove the old entry (we'll save updated version when user clicks save)
+    // Remove the old entry, save updated version when user clicks save instead
     deleteExercise(exercise.id);
 }
 
@@ -250,3 +267,5 @@ function showInputsFields(){
     const userInputs = document.querySelector('.userInputs');
     userInputs.style.display = userInputs.style.display === 'none' ? 'block' : 'none';
 }
+
+//Group helper functions in a seperate js file later
